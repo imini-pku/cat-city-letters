@@ -1,0 +1,3 @@
+# Preserve the source archive's exact bytes across Windows and other systems.
+# source_manifest.json records SHA-256 hashes before and after packaging.
+* -text

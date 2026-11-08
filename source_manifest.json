@@ -557,6 +557,7 @@
   ],
   "added_files": [
     ".gitignore",
+    ".gitattributes",
     "docs/作品条目信息.md",
     "source_manifest.json"
   ],
@@ -604,5 +605,5 @@
       }
     ]
   },
-  "packaged_bytes_excluding_manifest": 43486221
+  "packaged_bytes_excluding_manifest": 43486381
 }
