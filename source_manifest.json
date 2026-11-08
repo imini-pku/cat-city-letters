@@ -1,0 +1,608 @@
+{
+  "project": "猫城来信",
+  "copied_at": "2026-11-08",
+  "source_commit": "d4d9453",
+  "first_commit": "f40ffaa 2026-10-14 imini-pku build cat city letters playable demo",
+  "last_commit": "d4d9453 2026-10-17 imini-pku Update Site source",
+  "source_files": 64,
+  "source_bytes": 43483443,
+  "excluded": {
+    ".git": "Git history; source content preserved",
+    ".openai": "Host-specific deployment configuration",
+    "du2019.html": "Unrelated research HTML, not game content"
+  },
+  "secret_scan": {
+    "findings": [],
+    "scope": "Source text, sensitive filenames, and all existing ZIP/TAR members",
+    "archive_findings": [],
+    "remediation": {
+      "archive": "catcity-yanyuan-site.tar.gz",
+      "removed_paths": [
+        ".openai",
+        ".openai/hosting.json"
+      ],
+      "reason": "Host-specific deployment configuration excluded from publication"
+    }
+  },
+  "files": [
+    {
+      "path": "app.js",
+      "source_bytes": 36619,
+      "source_sha256": "2ccda9746b334470c7e251cdc98c0bff8809f6dc1b55cc3a751ed9794a73c0b9",
+      "packaged_bytes": 36619,
+      "packaged_sha256": "2ccda9746b334470c7e251cdc98c0bff8809f6dc1b55cc3a751ed9794a73c0b9",
+      "modified_after_copy": false
+    },
+    {
+      "path": "catcity-yanyuan-site.tar.gz",
+      "source_bytes": 8132549,
+      "source_sha256": "3cf7f3c52f2ae482f7f60e9986c794b6254d321f7239859463615dec8ed0e897",
+      "packaged_bytes": 8132030,
+      "packaged_sha256": "d3c7df4e1163e84b8dc84814c3896b8ba680c54bc777032198574b334ac23f4f",
+      "modified_after_copy": true
+    },
+    {
+      "path": "content.js",
+      "source_bytes": 6633,
+      "source_sha256": "d2f226225e7ba4fdfe0ef951e6dd0e752b517224ad394e5dc4818d2a417cf8c6",
+      "packaged_bytes": 6633,
+      "packaged_sha256": "d2f226225e7ba4fdfe0ef951e6dd0e752b517224ad394e5dc4818d2a417cf8c6",
+      "modified_after_copy": false
+    },
+    {
+      "path": "data.js",
+      "source_bytes": 38096,
+      "source_sha256": "1396ddb0bf3548721e4645429c5360e1cb1d5ad7ca6d7b509da03bdc8d3c858f",
+      "packaged_bytes": 38096,
+      "packaged_sha256": "1396ddb0bf3548721e4645429c5360e1cb1d5ad7ca6d7b509da03bdc8d3c858f",
+      "modified_after_copy": false
+    },
+    {
+      "path": "engine.js",
+      "source_bytes": 12951,
+      "source_sha256": "17ebddb9a17de80b8985d5e6435c67d818d96971cc130aeaac89df4210c915cb",
+      "packaged_bytes": 12951,
+      "packaged_sha256": "17ebddb9a17de80b8985d5e6435c67d818d96971cc130aeaac89df4210c915cb",
+      "modified_after_copy": false
+    },
+    {
+      "path": "icon.svg",
+      "source_bytes": 454,
+      "source_sha256": "4a9dd16f17bcf572e93f07c670f7aa7232abc17995c7d621f9ba0829a873695e",
+      "packaged_bytes": 454,
+      "packaged_sha256": "4a9dd16f17bcf572e93f07c670f7aa7232abc17995c7d621f9ba0829a873695e",
+      "modified_after_copy": false
+    },
+    {
+      "path": "index.html",
+      "source_bytes": 867,
+      "source_sha256": "b0ebf8eff79e8945553ecdc2af50252030ba437174271d3b462800d39856c3c4",
+      "packaged_bytes": 867,
+      "packaged_sha256": "b0ebf8eff79e8945553ecdc2af50252030ba437174271d3b462800d39856c3c4",
+      "modified_after_copy": false
+    },
+    {
+      "path": "manifest.webmanifest",
+      "source_bytes": 332,
+      "source_sha256": "7b3b61a4ffe75a6449f7ffe1143491d20202008665d1f16f7bebec40a83026ee",
+      "packaged_bytes": 332,
+      "packaged_sha256": "7b3b61a4ffe75a6449f7ffe1143491d20202008665d1f16f7bebec40a83026ee",
+      "modified_after_copy": false
+    },
+    {
+      "path": "README.md",
+      "source_bytes": 3579,
+      "source_sha256": "4b842dcf26641b6cf9a0379761cec776d1bbb4c25189b1916646ad595ab7e7af",
+      "packaged_bytes": 5259,
+      "packaged_sha256": "b2a5b77b91c9b8ab1286994c368db8f50326d6a5270ea7af8c95c6d8814a9a0c",
+      "modified_after_copy": true
+    },
+    {
+      "path": "style.css",
+      "source_bytes": 26473,
+      "source_sha256": "e5d740992332ccc47f42812da85e6f145658661e28317ddfddf294f28240aaaf",
+      "packaged_bytes": 26473,
+      "packaged_sha256": "e5d740992332ccc47f42812da85e6f145658661e28317ddfddf294f28240aaaf",
+      "modified_after_copy": false
+    },
+    {
+      "path": "sw.js",
+      "source_bytes": 717,
+      "source_sha256": "5250560c13bb764334c36eba0347a3af79c22b071783025ba1cd249ab09c5fb0",
+      "packaged_bytes": 717,
+      "packaged_sha256": "5250560c13bb764334c36eba0347a3af79c22b071783025ba1cd249ab09c5fb0",
+      "modified_after_copy": false
+    },
+    {
+      "path": "test.cjs",
+      "source_bytes": 3162,
+      "source_sha256": "6650da4e1ebdb287d1341a6e689954f726aabe3018894662bc40d68e93245af0",
+      "packaged_bytes": 3162,
+      "packaged_sha256": "6650da4e1ebdb287d1341a6e689954f726aabe3018894662bc40d68e93245af0",
+      "modified_after_copy": false
+    },
+    {
+      "path": "北大猫协版说明.md",
+      "source_bytes": 1578,
+      "source_sha256": "512536237624ab69ab75eeb6553ea09639a877bb5dd588f8c91365e6295fd27b",
+      "packaged_bytes": 1578,
+      "packaged_sha256": "512536237624ab69ab75eeb6553ea09639a877bb5dd588f8c91365e6295fd27b",
+      "modified_after_copy": false
+    },
+    {
+      "path": "开始试玩.bat",
+      "source_bytes": 376,
+      "source_sha256": "40c1fb2a0f766ed5901f54b76af07ee28d28b9cc8f52193a54011ecd0870056c",
+      "packaged_bytes": 376,
+      "packaged_sha256": "40c1fb2a0f766ed5901f54b76af07ee28d28b9cc8f52193a54011ecd0870056c",
+      "modified_after_copy": false
+    },
+    {
+      "path": "手机局域网试玩.bat",
+      "source_bytes": 431,
+      "source_sha256": "4262fe5eb84d454b0bd640b61063b30e76fa1a6ba2b1790a6dfd77cb326d9a8b",
+      "packaged_bytes": 431,
+      "packaged_sha256": "4262fe5eb84d454b0bd640b61063b30e76fa1a6ba2b1790a6dfd77cb326d9a8b",
+      "modified_after_copy": false
+    },
+    {
+      "path": "猫城来信-ACC2026-Demo.zip",
+      "source_bytes": 8061174,
+      "source_sha256": "2782cb44e01953a5c90785c623e4462a4702a899f7278d0e05f17003a1cbe717",
+      "packaged_bytes": 8061174,
+      "packaged_sha256": "2782cb44e01953a5c90785c623e4462a4702a899f7278d0e05f17003a1cbe717",
+      "modified_after_copy": false
+    },
+    {
+      "path": "猫城来信-燕园猫协版.zip",
+      "source_bytes": 8136184,
+      "source_sha256": "8b9a2130dea584a80d8f0cd21491394ecc39045dab33d8d3eff898d98f6ffe8f",
+      "packaged_bytes": 8136184,
+      "packaged_sha256": "8b9a2130dea584a80d8f0cd21491394ecc39045dab33d8d3eff898d98f6ffe8f",
+      "modified_after_copy": false
+    },
+    {
+      "path": "视觉方向-3-水墨淡彩参考.png",
+      "source_bytes": 2726455,
+      "source_sha256": "4ffec7521d33a277439556c51c90a76abd1854a9ac1ee84fa4be9a85b09ae456",
+      "packaged_bytes": 2726455,
+      "packaged_sha256": "4ffec7521d33a277439556c51c90a76abd1854a9ac1ee84fa4be9a85b09ae456",
+      "modified_after_copy": false
+    },
+    {
+      "path": "试玩说明.txt",
+      "source_bytes": 805,
+      "source_sha256": "3a5711fae5239f7164ce80c60dcf00ec9079328de37cad2754db9f186116e0c4",
+      "packaged_bytes": 805,
+      "packaged_sha256": "3a5711fae5239f7164ce80c60dcf00ec9079328de37cad2754db9f186116e0c4",
+      "modified_after_copy": false
+    },
+    {
+      "path": "dist/app.js",
+      "source_bytes": 36619,
+      "source_sha256": "2ccda9746b334470c7e251cdc98c0bff8809f6dc1b55cc3a751ed9794a73c0b9",
+      "packaged_bytes": 36619,
+      "packaged_sha256": "2ccda9746b334470c7e251cdc98c0bff8809f6dc1b55cc3a751ed9794a73c0b9",
+      "modified_after_copy": false
+    },
+    {
+      "path": "dist/content.js",
+      "source_bytes": 6633,
+      "source_sha256": "d2f226225e7ba4fdfe0ef951e6dd0e752b517224ad394e5dc4818d2a417cf8c6",
+      "packaged_bytes": 6633,
+      "packaged_sha256": "d2f226225e7ba4fdfe0ef951e6dd0e752b517224ad394e5dc4818d2a417cf8c6",
+      "modified_after_copy": false
+    },
+    {
+      "path": "dist/data.js",
+      "source_bytes": 38096,
+      "source_sha256": "1396ddb0bf3548721e4645429c5360e1cb1d5ad7ca6d7b509da03bdc8d3c858f",
+      "packaged_bytes": 38096,
+      "packaged_sha256": "1396ddb0bf3548721e4645429c5360e1cb1d5ad7ca6d7b509da03bdc8d3c858f",
+      "modified_after_copy": false
+    },
+    {
+      "path": "dist/engine.js",
+      "source_bytes": 12951,
+      "source_sha256": "17ebddb9a17de80b8985d5e6435c67d818d96971cc130aeaac89df4210c915cb",
+      "packaged_bytes": 12951,
+      "packaged_sha256": "17ebddb9a17de80b8985d5e6435c67d818d96971cc130aeaac89df4210c915cb",
+      "modified_after_copy": false
+    },
+    {
+      "path": "dist/icon.svg",
+      "source_bytes": 454,
+      "source_sha256": "4a9dd16f17bcf572e93f07c670f7aa7232abc17995c7d621f9ba0829a873695e",
+      "packaged_bytes": 454,
+      "packaged_sha256": "4a9dd16f17bcf572e93f07c670f7aa7232abc17995c7d621f9ba0829a873695e",
+      "modified_after_copy": false
+    },
+    {
+      "path": "dist/index.html",
+      "source_bytes": 867,
+      "source_sha256": "b0ebf8eff79e8945553ecdc2af50252030ba437174271d3b462800d39856c3c4",
+      "packaged_bytes": 867,
+      "packaged_sha256": "b0ebf8eff79e8945553ecdc2af50252030ba437174271d3b462800d39856c3c4",
+      "modified_after_copy": false
+    },
+    {
+      "path": "dist/manifest.webmanifest",
+      "source_bytes": 332,
+      "source_sha256": "7b3b61a4ffe75a6449f7ffe1143491d20202008665d1f16f7bebec40a83026ee",
+      "packaged_bytes": 332,
+      "packaged_sha256": "7b3b61a4ffe75a6449f7ffe1143491d20202008665d1f16f7bebec40a83026ee",
+      "modified_after_copy": false
+    },
+    {
+      "path": "dist/style.css",
+      "source_bytes": 26473,
+      "source_sha256": "e5d740992332ccc47f42812da85e6f145658661e28317ddfddf294f28240aaaf",
+      "packaged_bytes": 26473,
+      "packaged_sha256": "e5d740992332ccc47f42812da85e6f145658661e28317ddfddf294f28240aaaf",
+      "modified_after_copy": false
+    },
+    {
+      "path": "dist/sw.js",
+      "source_bytes": 717,
+      "source_sha256": "5250560c13bb764334c36eba0347a3af79c22b071783025ba1cd249ab09c5fb0",
+      "packaged_bytes": 717,
+      "packaged_sha256": "5250560c13bb764334c36eba0347a3af79c22b071783025ba1cd249ab09c5fb0",
+      "modified_after_copy": false
+    },
+    {
+      "path": "猫咪头像/hei-growth.png",
+      "source_bytes": 459324,
+      "source_sha256": "587aded45bb0574d13466f63302cccbc0d613c30e5dcc58b1d4902887be2c954",
+      "packaged_bytes": 459324,
+      "packaged_sha256": "587aded45bb0574d13466f63302cccbc0d613c30e5dcc58b1d4902887be2c954",
+      "modified_after_copy": false
+    },
+    {
+      "path": "猫咪头像/hei.png",
+      "source_bytes": 417039,
+      "source_sha256": "1f8ea7da2c50269fa8b4add7ed16ebe163ee1313833627cf97d7c56acd895dce",
+      "packaged_bytes": 417039,
+      "packaged_sha256": "1f8ea7da2c50269fa8b4add7ed16ebe163ee1313833627cf97d7c56acd895dce",
+      "modified_after_copy": false
+    },
+    {
+      "path": "猫咪头像/hu-growth.png",
+      "source_bytes": 473795,
+      "source_sha256": "b6535f573735b39df84ab7fc596e5a7350b24ab06d974420e0995fb7525c4e81",
+      "packaged_bytes": 473795,
+      "packaged_sha256": "b6535f573735b39df84ab7fc596e5a7350b24ab06d974420e0995fb7525c4e81",
+      "modified_after_copy": false
+    },
+    {
+      "path": "猫咪头像/hu.png",
+      "source_bytes": 440954,
+      "source_sha256": "e05879be72d246bd89f09dab1629472d9f66437fac29fbd61451adaaf711efbb",
+      "packaged_bytes": 440954,
+      "packaged_sha256": "e05879be72d246bd89f09dab1629472d9f66437fac29fbd61451adaaf711efbb",
+      "modified_after_copy": false
+    },
+    {
+      "path": "猫咪头像/juan-growth.png",
+      "source_bytes": 490515,
+      "source_sha256": "0b6edf2d1df44e3d3942afac2cec8911b794a150e8e8745177cbf39bde37d916",
+      "packaged_bytes": 490515,
+      "packaged_sha256": "0b6edf2d1df44e3d3942afac2cec8911b794a150e8e8745177cbf39bde37d916",
+      "modified_after_copy": false
+    },
+    {
+      "path": "猫咪头像/juan.png",
+      "source_bytes": 441743,
+      "source_sha256": "14140e56c657ef8196da49aa17d1dac4f89a76e24739af7fc3ee35c54e0bfd72",
+      "packaged_bytes": 441743,
+      "packaged_sha256": "14140e56c657ef8196da49aa17d1dac4f89a76e24739af7fc3ee35c54e0bfd72",
+      "modified_after_copy": false
+    },
+    {
+      "path": "猫咪头像/pku-hei.png",
+      "source_bytes": 483490,
+      "source_sha256": "4b2ba6c3f9c87ffd0b992242f6d290507b620c941ed90670c1b9a1031c3b4e51",
+      "packaged_bytes": 483490,
+      "packaged_sha256": "4b2ba6c3f9c87ffd0b992242f6d290507b620c941ed90670c1b9a1031c3b4e51",
+      "modified_after_copy": false
+    },
+    {
+      "path": "猫咪头像/pku-hu.png",
+      "source_bytes": 462677,
+      "source_sha256": "b7aefe540128f7b997109687f2b6bba89dbd6387dc81a412effb1aa12b70de0e",
+      "packaged_bytes": 462677,
+      "packaged_sha256": "b7aefe540128f7b997109687f2b6bba89dbd6387dc81a412effb1aa12b70de0e",
+      "modified_after_copy": false
+    },
+    {
+      "path": "猫咪头像/pku-juan.png",
+      "source_bytes": 475140,
+      "source_sha256": "7caa7b21fff2ec630289bdb364e2abd6032c559708a49750634e36f08f5fee05",
+      "packaged_bytes": 475140,
+      "packaged_sha256": "7caa7b21fff2ec630289bdb364e2abd6032c559708a49750634e36f08f5fee05",
+      "modified_after_copy": false
+    },
+    {
+      "path": "猫咪头像/pku-tang.png",
+      "source_bytes": 431401,
+      "source_sha256": "ac9901d212b00a8613e0dc6c46caac544d281212760cfe59a005127d452a9d5c",
+      "packaged_bytes": 431401,
+      "packaged_sha256": "ac9901d212b00a8613e0dc6c46caac544d281212760cfe59a005127d452a9d5c",
+      "modified_after_copy": false
+    },
+    {
+      "path": "猫咪头像/pku-yu.png",
+      "source_bytes": 457810,
+      "source_sha256": "d5c932c7511f779fd06e2ed4933025d3c95e3a0ecbab45435083b6681b4a169d",
+      "packaged_bytes": 457810,
+      "packaged_sha256": "d5c932c7511f779fd06e2ed4933025d3c95e3a0ecbab45435083b6681b4a169d",
+      "modified_after_copy": false
+    },
+    {
+      "path": "猫咪头像/pku-yue.png",
+      "source_bytes": 452245,
+      "source_sha256": "843332bedb486b2bb4babb1e28a3924187f2a1787edab8fec38fc4bd195397e9",
+      "packaged_bytes": 452245,
+      "packaged_sha256": "843332bedb486b2bb4babb1e28a3924187f2a1787edab8fec38fc4bd195397e9",
+      "modified_after_copy": false
+    },
+    {
+      "path": "猫咪头像/tang-growth.png",
+      "source_bytes": 417811,
+      "source_sha256": "9dec3435ae3f0f89c702deef679577f52e6527a7872b0aaf9386f7c4638004b4",
+      "packaged_bytes": 417811,
+      "packaged_sha256": "9dec3435ae3f0f89c702deef679577f52e6527a7872b0aaf9386f7c4638004b4",
+      "modified_after_copy": false
+    },
+    {
+      "path": "猫咪头像/tang.png",
+      "source_bytes": 385989,
+      "source_sha256": "4cc4e6b2f47248da6a6d00f2de84325487725d2eb834fbeb5a70d766bf2bd85a",
+      "packaged_bytes": 385989,
+      "packaged_sha256": "4cc4e6b2f47248da6a6d00f2de84325487725d2eb834fbeb5a70d766bf2bd85a",
+      "modified_after_copy": false
+    },
+    {
+      "path": "猫咪头像/yu-growth.png",
+      "source_bytes": 442103,
+      "source_sha256": "c4ca7c464f2a09075360516edfcc139ca5c650723a97420784f4e5b10290604a",
+      "packaged_bytes": 442103,
+      "packaged_sha256": "c4ca7c464f2a09075360516edfcc139ca5c650723a97420784f4e5b10290604a",
+      "modified_after_copy": false
+    },
+    {
+      "path": "猫咪头像/yu.png",
+      "source_bytes": 413104,
+      "source_sha256": "e3c9afda43bc74c853be9bcaada759b806362e8200dc9c4a7a12e8856e0ce8a4",
+      "packaged_bytes": 413104,
+      "packaged_sha256": "e3c9afda43bc74c853be9bcaada759b806362e8200dc9c4a7a12e8856e0ce8a4",
+      "modified_after_copy": false
+    },
+    {
+      "path": "猫咪头像/yue-growth.png",
+      "source_bytes": 507586,
+      "source_sha256": "72e3b9c77496724590791e83d1941c56470b2775a4531da4146ee41c484665d7",
+      "packaged_bytes": 507586,
+      "packaged_sha256": "72e3b9c77496724590791e83d1941c56470b2775a4531da4146ee41c484665d7",
+      "modified_after_copy": false
+    },
+    {
+      "path": "猫咪头像/yue.png",
+      "source_bytes": 432707,
+      "source_sha256": "ef393b4870d9da5da16a3d41c7c79db99844487be604ac52621c3c59f84894fe",
+      "packaged_bytes": 432707,
+      "packaged_sha256": "ef393b4870d9da5da16a3d41c7c79db99844487be604ac52621c3c59f84894fe",
+      "modified_after_copy": false
+    },
+    {
+      "path": "dist/猫咪头像/hei-growth.png",
+      "source_bytes": 459324,
+      "source_sha256": "587aded45bb0574d13466f63302cccbc0d613c30e5dcc58b1d4902887be2c954",
+      "packaged_bytes": 459324,
+      "packaged_sha256": "587aded45bb0574d13466f63302cccbc0d613c30e5dcc58b1d4902887be2c954",
+      "modified_after_copy": false
+    },
+    {
+      "path": "dist/猫咪头像/hei.png",
+      "source_bytes": 417039,
+      "source_sha256": "1f8ea7da2c50269fa8b4add7ed16ebe163ee1313833627cf97d7c56acd895dce",
+      "packaged_bytes": 417039,
+      "packaged_sha256": "1f8ea7da2c50269fa8b4add7ed16ebe163ee1313833627cf97d7c56acd895dce",
+      "modified_after_copy": false
+    },
+    {
+      "path": "dist/猫咪头像/hu-growth.png",
+      "source_bytes": 473795,
+      "source_sha256": "b6535f573735b39df84ab7fc596e5a7350b24ab06d974420e0995fb7525c4e81",
+      "packaged_bytes": 473795,
+      "packaged_sha256": "b6535f573735b39df84ab7fc596e5a7350b24ab06d974420e0995fb7525c4e81",
+      "modified_after_copy": false
+    },
+    {
+      "path": "dist/猫咪头像/hu.png",
+      "source_bytes": 440954,
+      "source_sha256": "e05879be72d246bd89f09dab1629472d9f66437fac29fbd61451adaaf711efbb",
+      "packaged_bytes": 440954,
+      "packaged_sha256": "e05879be72d246bd89f09dab1629472d9f66437fac29fbd61451adaaf711efbb",
+      "modified_after_copy": false
+    },
+    {
+      "path": "dist/猫咪头像/juan-growth.png",
+      "source_bytes": 490515,
+      "source_sha256": "0b6edf2d1df44e3d3942afac2cec8911b794a150e8e8745177cbf39bde37d916",
+      "packaged_bytes": 490515,
+      "packaged_sha256": "0b6edf2d1df44e3d3942afac2cec8911b794a150e8e8745177cbf39bde37d916",
+      "modified_after_copy": false
+    },
+    {
+      "path": "dist/猫咪头像/juan.png",
+      "source_bytes": 441743,
+      "source_sha256": "14140e56c657ef8196da49aa17d1dac4f89a76e24739af7fc3ee35c54e0bfd72",
+      "packaged_bytes": 441743,
+      "packaged_sha256": "14140e56c657ef8196da49aa17d1dac4f89a76e24739af7fc3ee35c54e0bfd72",
+      "modified_after_copy": false
+    },
+    {
+      "path": "dist/猫咪头像/pku-hei.png",
+      "source_bytes": 483490,
+      "source_sha256": "4b2ba6c3f9c87ffd0b992242f6d290507b620c941ed90670c1b9a1031c3b4e51",
+      "packaged_bytes": 483490,
+      "packaged_sha256": "4b2ba6c3f9c87ffd0b992242f6d290507b620c941ed90670c1b9a1031c3b4e51",
+      "modified_after_copy": false
+    },
+    {
+      "path": "dist/猫咪头像/pku-hu.png",
+      "source_bytes": 462677,
+      "source_sha256": "b7aefe540128f7b997109687f2b6bba89dbd6387dc81a412effb1aa12b70de0e",
+      "packaged_bytes": 462677,
+      "packaged_sha256": "b7aefe540128f7b997109687f2b6bba89dbd6387dc81a412effb1aa12b70de0e",
+      "modified_after_copy": false
+    },
+    {
+      "path": "dist/猫咪头像/pku-juan.png",
+      "source_bytes": 475140,
+      "source_sha256": "7caa7b21fff2ec630289bdb364e2abd6032c559708a49750634e36f08f5fee05",
+      "packaged_bytes": 475140,
+      "packaged_sha256": "7caa7b21fff2ec630289bdb364e2abd6032c559708a49750634e36f08f5fee05",
+      "modified_after_copy": false
+    },
+    {
+      "path": "dist/猫咪头像/pku-tang.png",
+      "source_bytes": 431401,
+      "source_sha256": "ac9901d212b00a8613e0dc6c46caac544d281212760cfe59a005127d452a9d5c",
+      "packaged_bytes": 431401,
+      "packaged_sha256": "ac9901d212b00a8613e0dc6c46caac544d281212760cfe59a005127d452a9d5c",
+      "modified_after_copy": false
+    },
+    {
+      "path": "dist/猫咪头像/pku-yu.png",
+      "source_bytes": 457810,
+      "source_sha256": "d5c932c7511f779fd06e2ed4933025d3c95e3a0ecbab45435083b6681b4a169d",
+      "packaged_bytes": 457810,
+      "packaged_sha256": "d5c932c7511f779fd06e2ed4933025d3c95e3a0ecbab45435083b6681b4a169d",
+      "modified_after_copy": false
+    },
+    {
+      "path": "dist/猫咪头像/pku-yue.png",
+      "source_bytes": 452245,
+      "source_sha256": "843332bedb486b2bb4babb1e28a3924187f2a1787edab8fec38fc4bd195397e9",
+      "packaged_bytes": 452245,
+      "packaged_sha256": "843332bedb486b2bb4babb1e28a3924187f2a1787edab8fec38fc4bd195397e9",
+      "modified_after_copy": false
+    },
+    {
+      "path": "dist/猫咪头像/tang-growth.png",
+      "source_bytes": 417811,
+      "source_sha256": "9dec3435ae3f0f89c702deef679577f52e6527a7872b0aaf9386f7c4638004b4",
+      "packaged_bytes": 417811,
+      "packaged_sha256": "9dec3435ae3f0f89c702deef679577f52e6527a7872b0aaf9386f7c4638004b4",
+      "modified_after_copy": false
+    },
+    {
+      "path": "dist/猫咪头像/tang.png",
+      "source_bytes": 385989,
+      "source_sha256": "4cc4e6b2f47248da6a6d00f2de84325487725d2eb834fbeb5a70d766bf2bd85a",
+      "packaged_bytes": 385989,
+      "packaged_sha256": "4cc4e6b2f47248da6a6d00f2de84325487725d2eb834fbeb5a70d766bf2bd85a",
+      "modified_after_copy": false
+    },
+    {
+      "path": "dist/猫咪头像/yu-growth.png",
+      "source_bytes": 442103,
+      "source_sha256": "c4ca7c464f2a09075360516edfcc139ca5c650723a97420784f4e5b10290604a",
+      "packaged_bytes": 442103,
+      "packaged_sha256": "c4ca7c464f2a09075360516edfcc139ca5c650723a97420784f4e5b10290604a",
+      "modified_after_copy": false
+    },
+    {
+      "path": "dist/猫咪头像/yu.png",
+      "source_bytes": 413104,
+      "source_sha256": "e3c9afda43bc74c853be9bcaada759b806362e8200dc9c4a7a12e8856e0ce8a4",
+      "packaged_bytes": 413104,
+      "packaged_sha256": "e3c9afda43bc74c853be9bcaada759b806362e8200dc9c4a7a12e8856e0ce8a4",
+      "modified_after_copy": false
+    },
+    {
+      "path": "dist/猫咪头像/yue-growth.png",
+      "source_bytes": 507586,
+      "source_sha256": "72e3b9c77496724590791e83d1941c56470b2775a4531da4146ee41c484665d7",
+      "packaged_bytes": 507586,
+      "packaged_sha256": "72e3b9c77496724590791e83d1941c56470b2775a4531da4146ee41c484665d7",
+      "modified_after_copy": false
+    },
+    {
+      "path": "dist/猫咪头像/yue.png",
+      "source_bytes": 432707,
+      "source_sha256": "ef393b4870d9da5da16a3d41c7c79db99844487be604ac52621c3c59f84894fe",
+      "packaged_bytes": 432707,
+      "packaged_sha256": "ef393b4870d9da5da16a3d41c7c79db99844487be604ac52621c3c59f84894fe",
+      "modified_after_copy": false
+    }
+  ],
+  "archives": [
+    {
+      "archive": "catcity-yanyuan-site.tar.gz",
+      "files": 27,
+      "uncompressed_bytes": 8208575
+    },
+    {
+      "archive": "猫城来信-ACC2026-Demo.zip",
+      "files": 26,
+      "uncompressed_bytes": 8162033
+    },
+    {
+      "archive": "猫城来信-燕园猫协版.zip",
+      "files": 29,
+      "uncompressed_bytes": 8213732
+    }
+  ],
+  "added_files": [
+    ".gitignore",
+    "docs/作品条目信息.md",
+    "source_manifest.json"
+  ],
+  "readme_change": "Original README retained, with GitHub navigation and current verification prepended after title.",
+  "deployment_check": {
+    "checked_at": "2026-11-08",
+    "base_url": "https://catcityletters.xyz/",
+    "tls_verification": true,
+    "resources": [
+      {
+        "path": "index.html",
+        "status": 200,
+        "bytes": 867,
+        "matches_local_source": true
+      },
+      {
+        "path": "app.js",
+        "status": 200,
+        "bytes": 36619,
+        "matches_local_source": true
+      },
+      {
+        "path": "engine.js",
+        "status": 200,
+        "bytes": 12951,
+        "matches_local_source": true
+      },
+      {
+        "path": "data.js",
+        "status": 200,
+        "bytes": 38096,
+        "matches_local_source": true
+      },
+      {
+        "path": "style.css",
+        "status": 200,
+        "bytes": 26473,
+        "matches_local_source": true
+      },
+      {
+        "path": "猫咪头像/pku-hei.png",
+        "status": 200,
+        "bytes": 483490,
+        "matches_local_source": true
+      }
+    ]
+  },
+  "packaged_bytes_excluding_manifest": 43486221
+}

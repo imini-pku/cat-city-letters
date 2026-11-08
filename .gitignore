@@ -1,0 +1,11 @@
+.env
+.env.*
+*.pem
+*.key
+*.pfx
+.openai/
+node_modules/
+__pycache__/
+.cache/
+Thumbs.db
+.DS_Store

@@ -1,0 +1,10 @@
+{
+  "name":"猫城来信 · 猫咪养成与叙事收集",
+  "short_name":"猫城来信",
+  "start_url":"./?fresh=1&v=mobile",
+  "display":"standalone",
+  "background_color":"#dfe7dd",
+  "theme_color":"#263f36",
+  "lang":"zh-CN",
+  "icons":[{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}

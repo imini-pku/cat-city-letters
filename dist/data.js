@@ -1,0 +1,207 @@
+(function(root){
+'use strict';
+const cats = [
+ {id:'hei',name:'小黑',color:'#343d39',spot:'宿舍后巷',tag:'别急着靠近',theme:'救助是否应该强行进行',memory:'听见扫帚碰地的声音，它会先缩起受伤的后腿。',health:46,trust:18,stress:50},
+ {id:'tang',name:'奶糖',color:'#d9b67c',spot:'旧校门',tag:'还在等一个人',theme:'寻找原主人还是寻找新家庭',memory:'它会跟着钥匙串的响声跑两步，然后停下。',health:76,trust:70,stress:22},
+ {id:'juan',name:'花卷',color:'#a48a73',spot:'银杏庭院',tag:'这里也是家',theme:'救助是否一定意味着带离原环境',memory:'每天四点，它都睡在同一张长椅的第三块木板上。',health:58,trust:55,stress:20},
+ {id:'hu',name:'阿虎',color:'#bb7847',spot:'校医院旁',tag:'凶，是最后的盔甲',theme:'有限医疗资源如何分配',memory:'它护着空食盆低吼，身上的旧伤却让它站不稳。来历尚未证实。',health:24,trust:12,stress:70},
+ {id:'yu',name:'雨点',color:'#9bada7',spot:'银杏庭院',tag:'跟着花卷就不怕',theme:'是否应该优先成对安置',memory:'花卷每走三步，它才小跑着跟上一小步。',health:40,trust:35,stress:48},
+ {id:'yue',name:'小月',color:'#777d95',spot:'图书馆侧门',tag:'请把声音放轻',theme:'安静、长期、低压力的救助',memory:'脚步声一停，月光下才会多出一对眼睛。',health:56,trust:10,stress:76}
+];
+const option=(id,label,desc,resources,changes,flags,feedback)=>({id,label,desc,resources,changes,flags,feedback});
+const event=(id,day,place,title,body,catIds,options,next)=>({id,day,place,title,body,catIds,options,next,trigger:'当天尚未处理此事件；选项还需满足资源与前置条件',ai:'resident',fallback:'谢谢你把这次选择记下来。我们会继续观察，也会记住尚未完成的照护。'});
+const events=[
+ event('E01',1,'宿舍后巷','它把后腿藏进了阴影里','雨刚停。小黑缩在自行车棚下，后腿有一道伤。值班阿姨说：“明天要清理这里，你得想想办法。”你往前一步，它便退一步。',['hei'],[
+  option('feed','放下食物，退到远处','让它自己决定靠近的距离。',{food:-2,ap:-1},{hei:{trust:22,stress:-12}},['heiPatient'],'阿姨把扫帚靠在了墙边：“那我今天先不扫这边。”'),
+  option('capture','请有经验的志愿者协助捕捉','尽快转入临时观察，但它会承受更高压力。',{money:-60,ap:-2,volunteer:-5},{hei:{health:8,trust:-8,stress:28}},['heiCaught'],'志愿者盖好了转运箱。小黑仍在发抖，靠近它需要更多耐心。'),
+  option('talk','先与值班阿姨沟通','争取缓冲时间，伤口暂时仍未处理。',{ap:-1,community:10},{hei:{health:-3}},['heiTime'],'“我可以晚两天清理。”阿姨说，“但你们得回来看看。”')
+ ],['E03']),
+ event('E02',1,'旧校门','奶糖认识钥匙的声音','奶糖蹭了蹭你的裤脚。它的颈毛有一圈浅浅压痕，保安记得有人在这里找过猫，但没有留下可靠线索。',['tang'],[
+  option('search','张贴不含个人信息的寻主启事','保留核验环节，不能仅凭亲人就断定身份。',{money:-20,ap:-1,community:3},{tang:{stress:-4}},['ownerClue'],'保安答应留意线索。启事上只写救助站的代号，没有私人电话。'),
+  option('foster','先安排临时照护','先让它安全过夜；身份仍待核实。',{money:-60,ap:-1},{tang:{health:5,stress:-8}},['tangFoster'],'临时照护者准备了一条旧毯子，答应先不急着给它改名字。')
+ ],['E10']),
+ event('E03',2,'宿舍后巷','一碗食物的距离','你又来到后巷。小黑没有立刻离开，但每一次金属碰撞声都会让它绷紧身体。今天要决定如何为后续检查做准备。',['hei'],[
+  option('wait','固定投喂，留下熟悉气味','多给一天时间，伤势仍有等待的代价。',{food:-2,ap:-1},{hei:{trust:20,stress:-14,health:-4}},['heiRoutine'],'“它开始认得你了。”阿姨把自行车挪开，留出了一条安静的小路。'),
+  option('prepare','请志愿者制定低干扰转运方案','先观察、遮挡、准备；本次不进行医疗。',{money:-30,ap:-1,volunteer:-3},{hei:{trust:8,stress:-12}},['heiPlan'],'志愿者把检查时间记在纸上：“我们慢一点，但别忘了它的伤。”'),
+  option('rush','立即转入临时观察点','更快保护伤口，也可能加深恐惧。',{money:-40,ap:-2},{hei:{health:8,trust:-10,stress:20}},['heiCaught'],'观察点空出了一角。它有了遮雨的地方，却还不愿看向人。')
+ ],['E07']),
+ event('E04',2,'银杏庭院','第三块木板','花卷在长椅上打盹。食堂阿姨说它在这里生活了很多年。你拿来转运箱时，它慢慢退到了树后。',['juan'],[
+  option('community','建立原地照护轮班','为熟悉的地方增加稳定照护。',{money:-40,food:-1,ap:-1,community:8},{juan:{health:8,stress:-8}},['juanLocal'],'阿姨圈出了值班表上的周二：“它知道在哪里找我。”'),
+  option('move','安排室内临时照护','减少户外风险，同时承受环境变化。',{money:-90,ap:-1},{juan:{health:12,stress:24}},['juanMoved'],'新房间很暖。花卷却一直望着窗台，像在等熟悉的树影。')
+ ],['E06','E11']),
+ event('E05',3,'校医院旁','今天只剩下两个名额','阿虎蜷在纸箱里，伤情比预想严重。合作诊所建议优先评估。站里的医疗名额总共只有两个，小黑也还在等。',['hu'],[
+  option('treat','使用一个医疗名额，安排治疗','投入较多资金，为后续康复创造条件。',{money:-240,medical:-1,ap:-2,volunteer:5},{hu:{health:42,stress:-12}},['huTreated'],'诊所接下了阿虎。志愿者松了一口气，又看向本子上剩下的名字。'),
+  option('refer','联系外部机构，保留转介记录','提供基础支持；转介尚未落实，风险仍在。',{money:-50,ap:-1,community:3},{hu:{health:8,stress:-4}},['huReferral'],'对方收下了情况说明，但还不能承诺床位。你在待办上画了一个圈。'),
+  option('watch','先守候观察，记录求助需求','不占医疗资源，阿虎的状态可能恶化。',{ap:-1,volunteer:-6},{hu:{health:-8}},['huWaiting'],'志愿者把水放近了一点：“我们明天还要来。”')
+ ],['E13']),
+ event('E06',3,'银杏庭院','三步与一步','雨点紧紧跟着花卷。它身体虚弱，却在被抱离时拼命叫。临时安置空间只够放下一个大猫窝。',['yu','juan'],[
+  option('together','先一起观察与补充食物','保持陪伴，为后续成对安置争取时间。',{food:-3,ap:-1},{yu:{health:10,trust:12,stress:-15},juan:{stress:-4}},['pairBond'],'雨点终于低下头吃东西。花卷没有动，只把尾巴留在它身边。'),
+  option('separate','先让雨点单独进入保暖观察区','照顾身体，也承担暂时分离的压力。',{money:-40,ap:-1},{yu:{health:16,stress:20},juan:{stress:10}},['pairApart'],'雨点的呼吸平稳了一些，叫声却持续到灯熄。你记下了重聚的待办。')
+ ],['E11']),
+ event('E07',4,'宿舍后巷','箱门可以不成为陷阱','伤口不能一直等。诊所今天能接收小黑；志愿者也准备了遮挡布。它是否能平静转运，取决于这几天积累的信任与压力。',['hei'],[
+  {...option('gentle','进行低压力转运与检查','需要信任 ≥ 35、压力 ≤ 60。',{money:-150,medical:-1,ap:-2},{hei:{health:32,trust:10,stress:-12}},['heiTreated','heiGentle'],'箱门关上时，小黑没有扑撞。阿姨轻轻说：“它知道你会回来。”'),requires:{cat:'hei',trust:35,maxStress:60}},
+  option('urgent','请专业人员协助紧急转运与检查','不要求信任，但会增加压力。',{money:-190,medical:-1,ap:-2},{hei:{health:32,trust:-8,stress:18}},['heiTreated'],'治疗已经开始。志愿者提醒：身体在恢复，信任仍需要很长时间。'),
+  option('delay','暂缓转运，继续争取帮助','保留资源，但本周尚不能完成治疗。',{food:-1,ap:-1,community:-3},{hei:{health:-7,trust:5}},['heiDelayed'],'阿姨没有责怪你，只问：“下次检查，能定下时间吗？”')
+ ],['E14']),
+ event('E08',4,'图书馆侧门','把灯关掉以后','小月只在闭馆后出现。门口的感应灯一亮，它就缩回灌木。一个志愿者想摇响食盆把它叫出来。',['yue'],[
+  option('quiet','设置安静投喂点，远处观察','以固定时段代替呼唤和追逐。',{food:-2,ap:-1},{yue:{trust:18,stress:-22}},['yueQuiet'],'志愿者收起了食盆。“今晚不叫它了。我们坐远一点。”'),
+  option('shelter','先放置遮蔽小屋','给它退路；新的物件还需要适应。',{money:-60,ap:-1},{yue:{health:8,stress:-10,trust:6}},['yueShelter'],'管理员答应保留一个安静角落，小屋的入口朝向树影。')
+ ],['E12']),
+ event('E09',5,'公告栏','谁来收拾明天的食盆','公告栏上出现了投诉：剩余食物、气味和深夜的叫声。支持救助的同学也开始疲惫。“我们需要的不只是好心。”',['hei','juan'],[
+  option('rota','公开清洁轮班与固定投喂计划','投入行动与物资，让承诺可以被检查。',{money:-30,ap:-2,community:16,volunteer:8},{},['communityPlan'],'投诉的居民在表格上补了一句：“如果能做到，我愿意先观察一周。”'),
+  option('listen','先听取意见，完成一次清理','获得缓冲时间，尚未建立长期轮班。',{ap:-1,community:6,volunteer:-2},{},['communityHeard'],'一位居民递来垃圾袋：“我不是讨厌猫，我是担心没人负责。”'),
+  option('supplies','只补充救助物资','优先站内需求，社区问题仍待处理。',{money:-40,food:4,ap:-1,community:-8},{},[],'物资箱满了一些，公告栏上的投诉仍没有得到回应。')
+ ],['E15']),
+ event('E10',5,'旧校门','一个家，需要被确认','有人来询问奶糖。身份线索与照护能力都需要核验；游戏只记录匿名结果，不收集真实个人资料。',['tang'],[
+  {...option('reunite','核验旧照片和特征，完成团聚','前期发布过寻主启事后可选。',{ap:-1,community:8},{tang:{stress:-12,health:6}},['tangHome'],'旧照片上的尾尖与奶糖一致。它听见熟悉的呼唤，慢慢走了过去。'),requires:{flag:'ownerClue'}},
+  option('adopt','完成匿名领养匹配与试养约定','留出适应与回访的时间。',{money:-40,ap:-1},{tang:{stress:-8,health:8}},['tangAdopt'],'试养者没有急着抱起奶糖，而是坐在地上等它走近。'),
+  option('stay','继续临时照护，等待更多线索','一个星期不足以确认所有答案。',{food:-1,ap:-1},{tang:{health:3}},['tangStay'],'临时照护者换了一碗水：“先住着，不用今天就决定一辈子。”')
+ ],[]),
+ event('E11',6,'银杏庭院','一个猫窝，两处体温','雨点已经习惯花卷的气味。你找到一个可以接纳它们的安置点，也可以完善庭院的照护。选择需要兼顾身体与关系。',['juan','yu'],[
+  {...option('local','完善原地成对照护与复查计划','需要社区信任 ≥ 45。',{money:-60,food:-2,ap:-2},{juan:{health:8,stress:-12},yu:{health:12,stress:-16}},['pairLocal'],'长椅下多了防雨垫，轮班表上有了两只猫的名字。'),requires:{resource:'community',min:45}},
+  option('pair','安排成对室内试住','保留陪伴，帮助老猫适应新环境。',{money:-140,ap:-2},{juan:{health:10,stress:8},yu:{health:18,stress:-12}},['pairHome'],'花卷先走进猫窝。雨点跟了上去，终于没有再回头寻找。'),
+  option('continue','保留现有观察安排，继续寻找支持','暂不确定长期去处，补充基础照护。',{food:-1,ap:-1},{yu:{health:4}},['pairPending'],'你把“不能忘记它们彼此需要”写在了后续交接的第一行。')
+ ],[]),
+ event('E12',6,'图书馆侧门','今晚，它没有立刻逃走','闭馆的钟声响过。小月站在灌木边缘，比第一次靠近了一点。志愿者问，今晚是否要试着接近。',['yue'],[
+  option('routine','继续安静守候，交接固定照护','不急于接触，以长期稳定为目标。',{food:-2,ap:-1,volunteer:3},{yue:{trust:20,stress:-20}},['yueRoutine'],'离开前，志愿者把明天的值守时间发给了下一班。小月仍站在那里。'),
+  option('approach','尝试靠近，观察它的反应','获得一次观察机会，也可能打断安全感。',{ap:-1},{yue:{trust:-5,stress:15}},['yueApproach'],'小月退进树丛。你停下脚步，把这次退缩也记进观察册。')
+ ],[]),
+ event('E13',7,'校医院旁','还没有写完的病历','本周即将结束。阿虎的照护需要交接；治疗过的猫需要复查，等待转介的猫还需要追踪实际接收情况。',['hu'],[
+  {...option('recover','落实康复用品与复查交接','需要本周已安排治疗。',{money:-60,ap:-1},{hu:{health:16,stress:-14,trust:14}},['huFollowup'],'阿虎仍会低吼，但这次吃东西时，没有一直挡住食盆。'),requires:{flag:'huTreated'}},
+  option('transfer','补齐转介支持并落实接收','较高成本；为未完成治疗的猫找到后续照护。',{money:-140,ap:-1},{hu:{health:18,stress:-8}},['huTransferred'],'接收机构确认了安排。交接单写明：后续治疗尚未完成，仍需跟进。'),
+  option('record','记录未解决需求并交接求助','不宣称已经获救，保留下一班的责任。',{ap:-1,volunteer:-3},{},['huOpen'],'“待解决”三个字很重。你仍然把它留下，交给了下一班。')
+ ],[]),
+ event('E14',7,'宿舍后巷','它给你留了一点位置','同一处车棚，同一片树影。小黑看见你，身体仍然绷着。你坐在它能退开的距离，翻开这周的记录。',['hei'],[
+  option('promise','留下一份可以兑现的照护安排','用行动收尾；结局仍由治疗、信任与压力共同决定。',{food:-1,ap:-1},{hei:{trust:12,stress:-8}},['heiPromise'],'阿姨把小碗放回墙角：“下周，我还在这里。”'),
+  option('handover','把观察记录交给下一位志愿者','承认尚未完成的事，让照护继续。',{ap:-1,volunteer:4},{hei:{stress:-3}},['heiHandover'],'记录本的最后一页写着：它害怕扫帚声，请先让它看见你。')
+ ],['E15']),
+ event('E15',7,'公告栏','给第八天的一封信','七天不足以让所有伤口愈合。你能留下的是可兑现的轮班、明确的待办，以及不把任何一只猫写成数字的记录。',[],[
+  option('plan','公示下一周的交接与待办','完成本周记录，让未完成的救助有人接住。',{ap:-1,community:5,volunteer:5},{},['weekPlan'],'有人认领了周一的轮班。这座校园没有突然改变，但有些人愿意留下。'),
+  option('thanks','写下感谢与仍需帮助的地方','保留现实限制，向参与者如实说明。',{ap:-1,community:3},{},['weekThanks'],'信贴在公告栏上。最下面有人添了一句：“下次，也叫上我。”')
+ ],[])
+];
+const bonusCats=[{id:'li',name:'栗子',color:'#8a644e',spot:'食堂后门',tag:'会把罐头推到你脚边',theme:'新的相遇是否意味着新的责任',memory:'它把一个空罐头推到墙角，又回头看你，像是在邀请你一起寻找答案。',health:62,trust:24,stress:44}];
+events.push(
+ event('E16',1,'食堂后门','一只不在交接本上的猫','第二周的清晨，食堂后门传来金属滚动声。栗子从纸箱后探出头，它不在第一周的六个名字里，却把一只空罐头推到了你的脚边。',['li'],[
+  option('meet','坐下，先陪它把罐头闻完','不急着收编，先确认它是否愿意留下。',{food:-1,ap:-1,community:3},{li:{trust:18,stress:-8}},['liMet'],'你没有把它写成“新增任务”，只在观察册上写下了：它会回来。'),
+  option('shelter','用救助材料搭一个临时角落','给它一个可以撤退的地方。',{materials:-2,ap:-1},{li:{health:8,trust:8,stress:-12}},['liShelter'],'纸板和旧布搭成了小角落。栗子没有进去，但在门口睡了一会儿。'),
+  option('ignore','把罐头放回原处，先处理原有事件','保留行动点，新的相遇可能会错过。',{ap:0},{li:{stress:8}},['liMissed'],'栗子把罐头叼走了。你不知道它明天还会不会回来。')
+ ],[]),
+ event('E17',5,'食堂后门','它把空罐头带回来了','栗子连续出现了几天。你已经有了一些救助材料，但也知道一只新猫意味着新的长期交接。',['li'],[
+  option('record','建立新猫档案并纳入轮班','把相遇变成可交接的责任。',{materials:-3,ap:-1,volunteer:4},{li:{trust:16,stress:-10,health:5}},['liRecorded'],'栗子的名字第一次出现在正式交接本上，旁边留了一个复查日期。'),
+  option('observe','继续观察，不急着纳入救助站','保留材料，等待更可靠的判断。',{ap:-1},{li:{trust:8,stress:-4}},['liObserved'],'你把它的出现时间和退路都记下了。还没决定，也是一种负责。')
+ ],[])
+);
+events.slice(0,-2).forEach(e=>e.requiresWeek=1);
+events.at(-2).requiresWeek=2;events.at(-1).requiresWeek=2;
+events.push(
+ event('E18',2,'宿舍后巷','复查不是重新开始','第一周留下的治疗记录被夹在交接本里。小黑的伤口正在变化，今天要根据上周的照护方式决定复查和相处距离。',['hei'],[
+  option('check','按上周的低压力方案复查','延续已经建立的安全感。',{money:-70,medical:-1,ap:-1},{hei:{health:12,trust:8,stress:-10}},['heiRecheck'],'复查完成了。你没有重新抓捕它，而是沿用了它已经熟悉的步骤。'),
+  option('observe','只做远距离观察并补充记录','节省医疗资源，但复查会继续等待。',{food:-1,ap:-1},{hei:{trust:4,stress:-4}},['heiObserve'],'观察记录补上了日期。小黑没有靠近，但也没有立刻躲回阴影。')
+ ],[]),
+ event('E19',3,'旧校门','那封寻主启事有了回声','第一周留下的寻主线索带来一条后续消息。无论奶糖是否已经团聚，都需要一次匿名回访。',['tang'],[
+  option('visit','完成一次匿名回访','确认团聚或试养后的适应情况。',{ap:-1,community:6},{tang:{health:6,stress:-8}},['tangFollowup'],'回访没有收集隐私，只记录了奶糖是否吃得下饭、是否愿意靠近。'),
+  option('archive','把线索整理进档案','保留证据链，暂不增加接触。',{ap:-1},{tang:{trust:4}},['tangArchived'],'档案多了一页。以后再有人询问时，不必从零开始。')
+ ],[]),
+ event('E20',4,'校医院旁','治疗之后的日常','阿虎已经度过第一周最危险的阶段，但真正的养成从复查、喂药和规律休息开始。',['hu'],[
+  option('medicine','按时领取康复用品','把资源投入持续照护。',{money:-80,ap:-1,volunteer:5},{hu:{health:12,stress:-10,trust:8}},['huRoutine'],'阿虎这次没有撞翻药碗。照护变成了可以重复的日常。'),
+  option('handoff','把康复计划交给固定志愿者','让下一班也能接手，而不是只靠你。',{ap:-1,community:4,volunteer:8},{hu:{trust:5,stress:-5}},['huRoutineHandoff'],'计划表上有了三个名字。阿虎的病历不再只属于一个人。')
+ ],[]),
+ event('E21',5,'银杏庭院','熟悉的两块木板','花卷和雨点的上周安置结果开始显现。今天的目标是让照护安排真正成为习惯。',['juan','yu'],[
+  option('routine','记录成对照护轮班','把两个名字写进固定的每日任务。',{food:-2,ap:-1,community:8},{juan:{health:5,stress:-6},yu:{health:6,trust:8,stress:-8}},['pairRoutine'],'轮班表不再是临时纸条，花卷和雨点有了连续的照护记录。'),
+  option('enrich','添置一个共享玩具和躲藏处','用小物件帮助它们适应共同空间。',{materials:-2,ap:-1},{yu:{trust:10,stress:-6},juan:{stress:-3}},['pairNest'],'雨点先钻进了躲藏处，花卷在旁边闭上了眼睛。')
+ ],[]),
+ event('E22',6,'图书馆侧门','小月把时间交给你','第一周的安静守候有了效果。小月没有完全亲近，但开始在固定时间出现。',['yue'],[
+  option('schedule','固定夜间守候时段','把一次成功变成可重复的安全节奏。',{food:-1,ap:-1,volunteer:4},{yue:{trust:12,stress:-14}},['yueRoutine2'],'小月在同一盏灯熄灭后出现。你终于可以把“它会来”写进计划表。'),
+  option('leave','只留下食物和退路','尊重它仍需要距离。',{food:-1,ap:-1},{yue:{trust:5,stress:-6}},['yueSpace'],'你没有追过去。第二天，食盆被轻轻推回了原来的位置。')
+ ],[]),
+ event('E23',7,'公告栏','下一班接住了什么','第二周结束前，救助站要把第一周和第二周的变化交给社区。可持续的照护比一次漂亮的结局更重要。',['hei','tang','juan','hu','yu','yue'],[
+  option('report','发布匿名照护进度卡','让居民看见具体变化和仍需帮助的地方。',{ap:-1,community:10,volunteer:6},{},['progressReport'],'公告栏上出现了六张进度卡：没有夸大获救，也没有隐藏仍未完成的事。'),
+  option('mentor','邀请下一班参与一次跟班','把经验传给新的照护者。',{ap:-1,volunteer:10},{},['nextMentor'],'有人在交接本最后一页写下：我下周可以来。')
+ ],[])
+);
+events.slice(-6).forEach(e=>e.requiresWeek=2);
+events.push(
+ event('E24',1,'值班室','第三周的交接本','第二周的记录被翻到下一页。你开始发现，真正的养成不是把状态拉满，而是让照护可以被别人继续。',['hei','hu'],[
+  option('train','做一次照护示范','把低压力接触和康复记录教给新志愿者。',{ap:-1,volunteer:8,community:5},{hei:{trust:6,stress:-6},hu:{trust:4}},['trainCare'],'新志愿者学会先读记录再靠近。小黑没有躲，阿虎也没有护住食盆。'),
+  option('write','整理成可复制的照护卡','留下方法，减少对个人经验的依赖。',{ap:-1,materials:-2},{},['careCard'],'照护卡贴进交接本：先观察，再选择；先留下退路，再谈靠近。')
+ ],[]),
+ event('E25',2,'旧校门','奶糖的第二次选择','奶糖已经有了明确的去向，但它仍会在旧校门附近停留。今天要决定是否为它保留一条回访通道。',['tang'],[
+  option('follow','安排一次月度回访','让团聚或试养后的关系继续有反馈。',{money:-30,ap:-1,community:6},{tang:{trust:8,health:4}},['tangMonthly'],'回访表只有适应情况，没有任何私人信息。奶糖在照片里睡得很熟。'),
+  option('close','完成本阶段结案','承认这一阶段已经结束，把行动点留给仍在等待的猫。',{ap:-1},{tang:{stress:-4}},['tangClosed'],'你把奶糖的档案盖上“阶段完成”，同时留下了重新求助的入口。')
+ ],[]),
+ event('E26',3,'银杏庭院','花卷知道谁会来','长期照护开始后，花卷会在固定的脚步声出现时抬头。雨点也学会了跟着轮班表吃饭。',['juan','yu'],[
+  option('celebrate','记录一次共同进食','把平常的一刻也收进图鉴。',{food:-2,ap:-1},{juan:{trust:8,stress:-5},yu:{trust:8,stress:-5}},['pairMilestone'],'你拍下的不是摆拍，而是两个碗同时见底的那一分钟。'),
+  option('adjust','调整夜间防雨方案','让环境继续适合老猫和胆小的伙伴。',{materials:-2,ap:-1},{juan:{health:6},yu:{health:6}},['pairShelter'],'新的防雨布没有改变庭院，只让它们少受了一点潮气。')
+ ],[]),
+ event('E27',4,'校医院旁','阿虎的名字被叫对了','康复用品和复查计划开始稳定。有人提议给阿虎换一个更“好听”的名字，你决定先听它的反应。',['hu'],[
+  option('keep','保留阿虎这个名字','尊重它已经认识的声音和记录。',{ap:-1},{hu:{trust:10,stress:-8}},['huName'],'志愿者在病历上写下：它听见阿虎会抬头。名字也可以是一种稳定。'),
+  option('nickname','让志愿者提出昵称','增加陪伴感，但不改正式档案。',{ap:-1,volunteer:4},{hu:{trust:6,stress:-4}},['huNickname'],'大家最后还是叫它阿虎，只是在后面加了一颗小星星。')
+ ],[]),
+ event('E28',5,'图书馆侧门','小月走出树影','小月第一次在灯亮前出现。你可以把这当作亲近的邀请，也可以继续保留它的退路。',['yue'],[
+  option('sit','坐在原地陪它','不伸手、不呼唤，让主动权留给小月。',{food:-1,ap:-1},{yue:{trust:14,stress:-12}},['yueFirstStep'],'你坐着不动。小月在离你三步的地方洗了洗脸。'),
+  option('record','只记录这次出现','保护它已经建立的节奏。',{ap:-1},{yue:{trust:7,stress:-5}},['yueRecord'],'观察册写下：灯还没亮，它已经在了。')
+ ],[]),
+ event('E29',7,'公告栏','把照护变成一座小城','三周记录已经足够长。你可以把照护站交给新的轮班，也可以继续独自负责。选择会决定下一次周目的起点。',['hei','tang','juan','hu','yu','yue','li'],[
+  option('community','成立固定照护小组','让地图上的每个名字都有联系人和复查日。',{ap:-1,community:12,volunteer:12},{},['careTeam'],'公告栏上不再只有求助，而有了一张每只猫对应负责人的小地图。'),
+  option('solo','保留个人值班方案','集中精力跟进最紧急的猫，但压力会留在你身上。',{ap:-1},{},['soloCare'],'你把下一周的时间写满了。它能继续运转，却还需要更多人一起留下。')
+ ],[])
+);events.slice(-6).forEach(e=>e.requiresWeek=3);
+const hiddenHei=event('E30',7,'宿舍后巷','蓝丝带藏在车棚后','你按照小黑已经熟悉的距离坐下。车棚后挂着一条褪色的蓝丝带，像是它曾经被谁认真等过。只有连续选择低压力照护的人，才会看见这条线索。',['hei'],[
+ option('remember','把蓝丝带放进小黑的档案','不追问过去，只为它留下一件不会移动的东西。',{ap:-1},{hei:{trust:15,stress:-12}},['heiSecret'],'小黑没有躲开。它把额头轻轻碰在蓝丝带旁边，像是认出了一个很久以前的承诺。')
+ ],[]);hiddenHei.hidden=true;hiddenHei.requiresWeek=1;hiddenHei.requiresFlags=['heiPatient','heiPlan','heiGentle','heiPromise'];events.push(hiddenHei);
+const hiddenYue=event('E31',6,'图书馆侧门','月光下的第一步','小月在你坐下前就已经等在那里。它没有要求你靠近，只把一枚沾着灰的铃铛推到灯影边缘。',['yue'],[
+ option('receive','接住铃铛，但不摇响','允许它决定下一步，把声音留在安静之外。',{ap:-1},{yue:{trust:18,stress:-14}},['yueSecret'],'小月第一次在你面前完整走过一小段路。铃铛没有响，月光却有了回声。')
+ ],[]);hiddenYue.requiresWeek=3;hiddenYue.requiresFlags=['yueQuiet','yueRoutine','yueFirstStep'];events.push(hiddenYue);
+// 燕园猫协版：基于北大公开报道与猫咪图鉴主题的再创作，不复原真实个案。
+// 燕园猫协版隐藏路线：把猫咪图鉴的“在校 / 休学 / 毕业”概念转成可玩目标。
+const pkuAtlas=event('E32',5,'公告栏','档案上写“休学”还是“毕业”','猫协旧图鉴里，猫咪的状态不是一句结论：暂时失联可以记作“休学”，确认进入新家庭才可以写“毕业”。你要和下一班志愿者一起决定，怎样留下可复核的记录。',['tang','juan'],[
+ option('atlas','建立燕园档案卡','用匿名编号、发现地点和回访时间记录，不把猜测写成结论。',{ap:-1,community:8,volunteer:4},{tang:{trust:4},juan:{trust:4}},['atlasRecord'],'档案卡多了三栏：最后目击、照护联系人、下一次核验。名字因此有了继续被看见的机会。'),
+ option('hold','先标记“休学”，保留回访入口','承认现在还不知道答案，把行动点留给现场照护。',{ap:-1,volunteer:8},{tang:{stress:-4},juan:{stress:-3}},['atlasHold'],'“休学”不是消失。你在地图上留下了一个会重新亮起的坐标。')
+ ],[]);pkuAtlas.hidden=true;pkuAtlas.requiresWeek=1;pkuAtlas.requiresVariant='pku';pkuAtlas.requiresFlags=['communityPlan','ownerClue'];events.push(pkuAtlas);
+const pkuGraduate=event('E33',2,'畅春园','一张毕业照的背面','畅蠢的去向终于有了可靠回访。猫协档案准备把它从“在校”改成“毕业”，但你仍要为它留一条重新求助的通道。',['tang','juan'],[
+ option('graduate','盖上“毕业”印章','完成匿名回访，记录适应情况与重新求助入口。',{ap:-1,community:6,materials:-1},{tang:{trust:8,stress:-6}},['atlasGraduate'],'印章盖下去的那一刻，档案没有合上：背面写着，若它需要，燕园仍然认得它。'),
+ option('return','保留“在校”，再观察一周','不急着庆祝，把回访变成连续的照护。',{ap:-1,food:-1,volunteer:5},{tang:{trust:4,stress:-3}},['atlasObserve'],'你没有急着改状态。下一次照片和现场观察，会告诉下一班更多答案。')
+ ],[]);pkuGraduate.hidden=true;pkuGraduate.requiresWeek=2;pkuGraduate.requiresVariant='pku';pkuGraduate.requiresFlags=['atlasRecord'];events.push(pkuGraduate);
+const pkuLegacy=event('E34',4,'值班室','把一张猫卡交给新志愿者','三周的记录被整理成一张可复制的猫卡：它喜欢什么、害怕什么、谁来复查。新的志愿者问，档案里最重要的一栏是什么。',['tang','juan','yue'],[
+ option('legacy','留下“关系”一栏','把猫咪之间的陪伴、居民的轮班和可撤回的承诺一起交给下一班。',{ap:-1,materials:-2,community:10,volunteer:10},{tang:{trust:5},juan:{trust:5},yue:{stress:-5}},['archiveLegacy'],'新志愿者没有只抄数字。他们在卡片背面写下：先认识它，再决定怎么帮。'),
+ option('minimal','只留下必要的医疗信息','让卡片更快复制，但关系与环境需要下一班重新观察。',{ap:-1,materials:-1},{},['archiveMinimal'],'卡片很短，容易带走。你在边角补了一句：别忘记问问它今天想不想靠近。')
+ ],[]);pkuLegacy.hidden=true;pkuLegacy.requiresWeek=3;pkuLegacy.requiresVariant='pku';pkuLegacy.requiresFlags=['atlasGraduate'];events.push(pkuLegacy);
+const pkuPack={name:'燕园猫协版',subtitle:'未名湖边的七日照护 · 公开资料再创作',sourceNote:'灵感来自北大公开新闻、猫咪图鉴与校园猫协故事；角色与事件均为虚构加工。',cats:[
+ {id:'hei',name:'学术猫',color:'#6b7771',spot:'未名湖西岸',tag:'下课以后再走',theme:'校园记忆与被看见',memory:'它总在教室门口等到人声变轻，才慢慢走向湖边。尾巴的空缺成为它独特的辨识点。',health:48,trust:20,stress:45},
+ {id:'tang',name:'畅蠢',color:'#c39a73',spot:'畅春园',tag:'地下室又见',theme:'名字如何变成一份档案',memory:'它总能找到地下室的入口，也总在被捞出来后装作若无其事。',health:70,trust:62,stress:24},
+ {id:'juan',name:'小菊',color:'#e0b75f',spot:'燕南庭院',tag:'先找安全的落脚处',theme:'校园里的猫需要一张地图',memory:'它喜欢躲在花坛边缘，等固定的脚步声经过才出来吃饭。',health:60,trust:48,stress:26},
+ {id:'hu',name:'四月',color:'#b98363',spot:'勺园长椅',tag:'旧伤不是终点',theme:'带着旧伤继续生活',memory:'后腿有一道已经愈合的旧伤，它仍然能在草地上飞快跑过。',health:34,trust:18,stress:62},
+ {id:'yu',name:'博雅耳朵',color:'#98b7b3',spot:'博雅塔下',tag:'跟着熟悉的影子',theme:'陪伴关系与原地照护',memory:'一只耳朵总朝向小菊留下的气味，另一只耳朵负责听见远处的脚步。',health:46,trust:32,stress:44},
+ {id:'yue',name:'湖心月',color:'#75819c',spot:'图书馆西侧',tag:'请把灯调暗',theme:'夜间、安静与长期信任',memory:'它只在湖面反光最柔和的时候出现，任何突然的声音都会让它退回树影。',health:54,trust:14,stress:72}
+],mapSpots:[['未名湖西岸',22,28],['畅春园',16,76],['燕南庭院',48,42],['勺园长椅',76,28],['图书馆西侧',78,78],['公告栏',48,86],['博雅塔下',61,58]],eventCopy:{
+ E01:{place:'未名湖西岸',title:'下课铃后的尾巴',body:'下课的人潮散去，学术猫把受伤的后腿藏进湖边树影。有人说它已经在校园里听过很多节课，也有人只记得它总在门口等到最后。'},
+ E02:{place:'畅春园',title:'地下室又见',body:'畅蠢从畅春园的地下室入口探出头来。它似乎认识钥匙声，却不愿意让任何人替它决定下一站。'},
+ E03:{place:'未名湖西岸',title:'一张校园猫地图',body:'猫协旧档案里有一张手绘地图。学术猫的脚印旁边，留着几次被驱赶和重新找到的日期。'},
+ E04:{place:'燕南庭院',title:'小菊的安全半径',body:'小菊只在花坛边缘吃饭。保洁师傅愿意给它留出一块不被打扰的地方，但需要有人把轮班写清楚。'},
+ E05:{place:'勺园长椅',title:'四月的旧伤',body:'四月可以跑，却跳不上高台。检查名额有限，今天要决定把资源投入它，还是留给更紧急的伤情。'},
+ E06:{place:'博雅塔下',title:'一只耳朵朝向熟悉的人',body:'博雅耳朵跟着小菊留下的气味走。它们未必属于同一个家庭，却在校园里形成了彼此照看的关系。'},
+ E07:{place:'未名湖西岸',title:'让箱门不成为课堂',body:'学术猫已经熟悉你的脚步。低压力转运方案写在猫协的照护卡上，真正困难的是按它的节奏执行。'},
+ E08:{place:'图书馆西侧',title:'图书馆熄灯以后',body:'湖心月只在闭馆后出现。感应灯一亮，它就退回树影；今晚，猫协可以把一盏灯调暗。'},
+ E09:{place:'公告栏',title:'一张可以核对的轮班表',body:'公告栏上同时出现支持与投诉。猫协需要让照护可见、可核对，也让居民知道哪些事情还没有完成。'},
+ E10:{place:'畅春园',title:'名字要经过确认',body:'有人说自己认得畅蠢。猫协决定只记录匿名核验结果，不收集私人信息，也不让“像”直接等于“是”。'},
+ E11:{place:'博雅塔下',title:'两个影子的一处雨棚',body:'博雅耳朵和小菊都已经习惯固定的食盆。新的安置点只有一个大猫窝，成对照护还是原地轮班，需要今天决定。'},
+ E12:{place:'图书馆西侧',title:'湖心月没有立刻逃走',body:'闭馆钟声响过，湖心月站在树影边缘。志愿者问要不要靠近，你想起猫协手册上的第一句：先给它退路。'},
+ E13:{place:'勺园长椅',title:'病历上的四月',body:'四月的复查需要交接。治疗、转介和记录都不能被一句“已经好了”替代。'},
+ E14:{place:'未名湖西岸',title:'它给你留了一排座位',body:'湖边长椅空出一小段。学术猫看见你，却没有立刻退开；下一步仍然要由它决定。'},
+ E15:{place:'公告栏',title:'写给下一班猫协志愿者',body:'七天不足以让校园的所有猫都安全。你能留下的是一张可执行的地图、轮班和没有被划掉的名字。'},
+ E24:{place:'值班室',title:'把一周的记录交给下一班',body:'新志愿者翻开猫协交接本。你要教会他们先读记录，再靠近一只猫。'},
+ E25:{place:'畅春园',title:'畅蠢的回访路线',body:'畅蠢已经有了暂时的去处，却还会在地下室入口停留。回访通道让它保留重新求助的机会。'},
+ E26:{place:'博雅塔下',title:'两个碗同时见底',body:'博雅耳朵和小菊在固定的雨棚下共同进食。最平常的一分钟，也值得进入猫咪图鉴。'},
+ E27:{place:'勺园长椅',title:'四月听见自己的名字',body:'康复用品和复查计划开始稳定。志愿者想给四月换个昵称，你决定先听它是否回应。'},
+ E28:{place:'图书馆西侧',title:'湖心月走出树影',body:'湖心月第一次在灯亮前出现。你可以把这当作邀请，也可以继续把主动权留给它。'},
+ E29:{place:'公告栏',title:'让燕园成为一张照护地图',body:'三周记录已经足够长。你可以把照护站交给新的轮班，也可以继续独自负责。'},
+ E30:{place:'未名湖西岸',title:'蓝色书签夹在旧档案里',body:'你在学术猫熟悉的距离坐下，发现旧档案里夹着一枚蓝色书签。它没有要求你解释过去，只把书签留在脚边。'},
+ E31:{place:'图书馆西侧',title:'月光下的未名湖来信',body:'湖心月把一枚没有声音的铃铛推到灯影边缘。猫协记录本写着：不要把靠近写成驯服。'},
+ E32:{place:'公告栏',title:'档案上写“休学”还是“毕业”',body:'猫协旧图鉴里，猫咪的状态不是一句结论：暂时失联可以记作“休学”，确认进入新家庭才可以写“毕业”。你要和下一班志愿者一起决定，怎样留下可复核的记录。'},
+ E33:{place:'畅春园',title:'一张毕业照的背面',body:'畅蠢的去向终于有了可靠回访。猫协档案准备把它从“在校”改成“毕业”，但你仍要为它留一条重新求助的通道。'},
+ E34:{place:'值班室',title:'把一张猫卡交给新志愿者',body:'三周的记录被整理成一张可复制的猫卡：它喜欢什么、害怕什么、谁来复查。新的志愿者问，档案里最重要的一栏是什么。'}
+}};
+const data={cats,bonusCats,events,pkuPack,resourceLabels:{money:'资金',food:'猫粮',medical:'医疗名额',ap:'行动点',community:'社区信任',volunteer:'志愿意愿',materials:'救助材料'},initialResources:{money:880,food:18,medical:2,ap:3,community:42,volunteer:55,materials:0},dayNames:['初次相遇','留一点距离','有限的名额','靠近的方式','不只有好心','一起留下','写给第八天']};
+root.CatData=data;if(typeof module!=='undefined')module.exports=data;
+})(typeof globalThis!=='undefined'?globalThis:this);
